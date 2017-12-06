@@ -37,18 +37,11 @@ class Product(Base):
 
 Base.metadata.create_all(engine)
 
-
-print("Hello dear User!\nYou can either add new items to your grocery list or check your list\nWhat would you like to do? Please choose 'add' or 'check' only.")
-
+print("Hello dear User!\nYou can either add new items to your grocery list or check your list.\n\nWhat would you like to do? Please choose 'Add' or 'Check' only.")
 
 #category template with the category printing function
-category_msg_template = ["1. Vegetables/Fruits", "2. Dairy products", "3. Meat", "4. Chemistry",
-                        "5. Cosmetics", "6. Bread", "7. Drinks", "8. Alkohol", "9. Snacks", "10. Others"]
-
-
-def category_printing():
-    for i in category_msg_template:
-        print(i)
+category_msg_template = {"1": "Vegetables", "2": "Fruits", "3": "Dairy products", "4": "Meat", "5": "Chemistry",
+            "6": "Cosmetics", "7": "Bread", "8": "Drinks", "9": "Alcohol", "10": "Snacks", "11": "Others"}
 
 def first_choise():
     """checking if the user wants to add the new item or view the whole list"""
@@ -63,13 +56,40 @@ def first_choise():
             print("You messed up. Please choose to add a new item or check the current list only.")
 
 def display():
-    """Inserting data into database"""
-    print("At first pick one of the following categories:\n")
-    return category_printing()
+    """Displaying categories and to choose the correct one"""
+    for k, v in category_msg_template.items():
+        print(k, v)
+    while True:
+        category = input("\nAt first pick one of the above categories:\n").title()
+        if category in category_msg_template or category in category_msg_template.values():
+            if category == "1" or category == "Vegetables":
+                print("Warzywka")
+            elif category == "2" or category == "Fruits":
+                print("Owocki")
+            elif category == "3" or category == "Dairy products":
+                print("nabial")
+            elif category == "4" or category == "Meat":
+                print("Miesko")
+            elif category == "5" or category == "Chemistry":
+                print("chemia")
+            elif category == "6" or category == "Cosmetics":
+                print("kosmetyki")
+            elif category == "7" or category == "Bread":
+                print("pieczywko")
+            elif category == "8" or category == "Drinks":
+                print("napoje")
+            elif category == "9" or category == "Alcohol":
+                print("alko")
+            elif category == "10" or category == "Snacks":
+                print("przekaski")
+            elif category == "11" or category == "Others":
+                print("inne")
+        else:
+            print("Are You sure you chose correct category?")
 
     while True:
-        category_choise = input().strip().lower()
-        if category_choise == "1" or category_choise == "vegetables":
+        category_choise = input().strip()
+        if category_choise == "1" or category_choise == "Vegetables":
             print("Twoja stara")
 
 def funkcja_do_wyswietlania(cipka, kutas):
