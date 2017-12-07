@@ -87,13 +87,9 @@ def display():
         else:
             print("Are You sure you chose correct category?")
 
-    while True:
-        category_choise = input().strip()
-        if category_choise == "1" or category_choise == "Vegetables":
-            print("Twoja stara")
 
-def funkcja_do_wyswietlania(cipka, kutas):
-    lista = cipka + kutas
+def funkcja_do_wyswietlania(x, y):
+    lista = x + y
 
     return lista
 
