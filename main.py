@@ -48,50 +48,50 @@ def first_choise():
     while True:
         choice = input().strip().lower()
         if choice == "add" or choice == "a":
-            return display()
+            return add_product()
         elif choice == "check" or choice == "c":
-            print(funkcja_do_wyswietlania(300,500))
+            print("funkcja_do_wyswietlania")
             break
         else:
             print("You messed up. Please choose to add a new item or check the current list only.")
 
-def display():
-    """Displaying categories and to choose the correct one"""
-    for k, v in category_msg_template.items():
-        print(k, v)
+def add_product():
+    """Adds products according to users input"""
+    name = input("Please provide the name your product\n")
     while True:
-        category = input("\nAt first pick one of the above categories:\n").title()
-        if category in category_msg_template or category in category_msg_template.values():
-            if category == "1" or category == "Vegetables":
-                print("Warzywka")
-            elif category == "2" or category == "Fruits":
-                print("Owocki")
-            elif category == "3" or category == "Dairy products":
-                print("nabial")
-            elif category == "4" or category == "Meat":
-                print("Miesko")
-            elif category == "5" or category == "Chemistry":
-                print("chemia")
-            elif category == "6" or category == "Cosmetics":
-                print("kosmetyki")
-            elif category == "7" or category == "Bread":
-                print("pieczywko")
-            elif category == "8" or category == "Drinks":
-                print("napoje")
-            elif category == "9" or category == "Alcohol":
-                print("alko")
-            elif category == "10" or category == "Snacks":
-                print("przekaski")
-            elif category == "11" or category == "Others":
-                print("inne")
+        quantity = input("Please provide quantity of your product\n")
+        try:
+            quantity = int(quantity)
+            break
+        except ValueError:
+            print("That's not an integer!")
+            continue
+    while True:
+        type =input("Do you want to add pieces or kgs?\n")
+        if type == "pieces" or type == "piece" or type == "kg" or type == "kgs":
+            break
+        else:
+            print("Hey mate, please use only 'piece' or 'kg'")
+    if type == "pieces" or type == "piece":
+        type = "pieces"
+    else:
+        type = "kgs"
+
+    print(type)
+    for k, v in category_msg_template.items(): #prints dictionary to display categories
+        print(k, v)
+    while True: #prints key of the category dict for both key and value input
+        category = input("\nPick one of the above categories:\n").title()
+        if category in category_msg_template:
+            print(category)
+        elif category in category_msg_template.values():
+            for key, value in category_msg_template.items():
+                if category == value:
+                    print(key)
         else:
             print("Are You sure you chose correct category?")
 
-
-def funkcja_do_wyswietlania(x, y):
-    lista = x + y
-
-    return lista
+            print(category)
 
 if __name__ == "__main__":
     first_choise()
