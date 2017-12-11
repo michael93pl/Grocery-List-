@@ -84,10 +84,13 @@ def add_product():
         category = input("\nPick one of the above categories:\n").title()
         if category in category_msg_template:
             print(category)
+            break
         elif category in category_msg_template.values():
             for key, value in category_msg_template.items():
                 if category == value:
-                    print(key)
+                    category = key
+                    print(category)
+                    break
         else:
             print("Are You sure you chose correct category?")
             print(category)
