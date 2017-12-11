@@ -90,6 +90,7 @@ def add_product():
                     print(key)
         else:
             print("Are You sure you chose correct category?")
+
             print(category)
 
 if __name__ == "__main__":
