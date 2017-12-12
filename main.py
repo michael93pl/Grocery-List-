@@ -57,8 +57,8 @@ def first_choise():
 
 def add_product():
     """Adds products according to users input"""
-    name = input("Please provide the name your product\n")
-    while True:
+    name = input("Please provide the name your product\n")#name of the product
+    while True:#checks if quantity is an int
         quantity = input("Please provide quantity of your product\n")
         try:
             quantity = int(quantity)
@@ -66,7 +66,7 @@ def add_product():
         except ValueError:
             print("That's not an integer!")
             continue
-    while True:
+    while True:#converts input of the product type into specific enum in DB
         type =input("Do you want to add pieces or kgs?\n")
         if type == "pieces" or type == "piece" or type == "kg" or type == "kgs":
             break
@@ -77,24 +77,37 @@ def add_product():
     else:
         type = "kgs"
 
-    print(type)
     for k, v in category_msg_template.items(): #prints dictionary to display categories
         print(k, v)
     while True: #prints key of the category dict for both key and value input
         category = input("\nPick one of the above categories:\n").title()
         if category in category_msg_template:
-            print(category)
             break
         elif category in category_msg_template.values():
             for key, value in category_msg_template.items():
                 if category == value:
                     category = key
-                    print(category)
-                    break
+            break
         else:
             print("Are You sure you chose correct category?")
 
-            print(category)
+    decision_for_description = input("Do you want to add any description?\n").lower()
+    if decision_for_description == "yes" or decision_for_description == "y":
+        while True:
+            description = input("Please provide valid description of your product\n")
+            if len(description) > 255:
+                print("Hey, maximum description length is 255 characters!")
+            else:
+                break
+    else:
+        description = ""
+    global product
+    product = (name, quantity, type, category, description)
+
+    return display_ready_product()
+
+def display_ready_product():
+    print(product)
 
 if __name__ == "__main__":
     first_choise()
