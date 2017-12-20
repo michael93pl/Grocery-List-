@@ -76,8 +76,13 @@ def add_product():
         type = "pieces"
     else:
         type = "kgs"
+
+    return cos()
+
+def something():
     for k, v in category_msg_template.items(): #prints dictionary to display categories
         print(k, v)
+
     while True: #prints key of the category dict for both key and value input
         category = input("\nPick one of the above categories:\n").title()
         if category in category_msg_template:
@@ -89,34 +94,41 @@ def add_product():
             break
         else:
             print("Are You sure you chose correct category?")
-    try:
-        while True:
-            decision_for_description = input("Do you want to add any description?\n").lower()
-            if decision_for_description == "yes" or decision_for_description == "y":
-                while True:
-                    description = input("Please provide valid description of your product.\n")
-                    if len(description) > 255:
-                        print("Hey, maximum description length is 255 characters!")
-                    else:
-                        raise StopIteration
-            elif decision_for_description == "no" or decision_for_description == "n":
-                description = ""
-                break
-            else:
-                print("Please choose yes or no.")
-    except StopIteration:
-        pass
+    return category
 
-    global product
-    product = (name, quantity, type, category, description)
+def get_decision(question):
+    decision = False
+    while True:
+        decision_for_description = input(question).lower()
+        if decision_for_description in ("y", "yes"):
+            decision = True
+            break
+        if decision_for_description in ('n', 'no'):
+            break
+        print("Please choose yes or no.")
+    return decision
 
-    return display_ready_product()
+def get_description():
+    while True:
+        description = input("Please provide valid description of your product.\n")
+        if len(description) > 255:
+            print("Hey, maximum description length is 255 characters!")
+        else:
+            break
+    return description
 
-def display_ready_product():
-    global item
-    item = product
-    display = "name: {}\nquantity: {}\ntype: {} \ncategory: {} \ndescription: {}".format(product[0], product[1], product[2], product[3], product[4])
-    print(display)
+def cos():
+    category = None
+
+    category = something()
+
+    description = None
+
+    add_description = get_decision("Do you want to add any description?\n")
+    if add_description:
+        description = get_description()
+        print(category)
+        print(description)
 
 if __name__ == "__main__":
     first_choise()
