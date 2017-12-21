@@ -47,39 +47,47 @@ def first_choise():
     """checking if the user wants to add the new item or view the whole list"""
     while True:
         choice = input().strip().lower()
-        if choice == "add" or choice == "a":
-            return add_product()
-        elif choice == "check" or choice == "c":
+        if choice in ("add", "a"):
+            return gather()
+        elif choice in ("check", "c"):
             print("funkcja_do_wyswietlania")
             break
         else:
             print("You messed up. Please choose to add a new item or check the current list only.")
 
-def add_product():
-    """Adds products according to users input"""
+def get_name():
+    """gets name input"""
     name = input("Please provide the name your product.\n")#name of the product
+    return name
+
+def get_quantity():
+    """gets quantity input"""
     while True:#checks if quantity is an int
         quantity = input("Please provide quantity of your product.\n")
         try:
             quantity = int(quantity)
-            break
+            return quantity
         except ValueError:
             print("That's not an integer!")
             continue
+
+def get_type():
+    """gets type input"""
     while True:#converts input of the product type into specific enum in DB
         type =input("Do you want to add pieces or kgs?\n")
-        if type == "pieces" or type == "piece" or type == "kg" or type == "kgs":
+        if type in ("pieces", "piece",  "kg", "kgs"):
             break
         else:
             print("Hey mate, please use only 'piece' or 'kg'.")
-    if type == "pieces" or type == "piece":
+    if type in ("pieces", "piece"):
         type = "pieces"
     else:
         type = "kgs"
 
-    return cos()
+    return type
 
-def something():
+def get_category():
+    """gets category input"""
     for k, v in category_msg_template.items(): #prints dictionary to display categories
         print(k, v)
 
@@ -97,6 +105,7 @@ def something():
     return category
 
 def get_decision(question):
+    """decision for description"""
     decision = False
     while True:
         decision_for_description = input(question).lower()
@@ -109,6 +118,7 @@ def get_decision(question):
     return decision
 
 def get_description():
+    """gets description input"""
     while True:
         description = input("Please provide valid description of your product.\n")
         if len(description) > 255:
@@ -117,18 +127,60 @@ def get_description():
             break
     return description
 
-def cos():
+def gather():
+    """gathers all inputs into one function"""
+    name = None
+    name = get_name()
+    quantity = None
+    quantity = get_quantity()
+    type = None
+    type = get_type()
     category = None
-
-    category = something()
-
-    description = None
+    category = get_category()
+    description = " "
 
     add_description = get_decision("Do you want to add any description?\n")
     if add_description:
         description = get_description()
-        print(category)
-        print(description)
+
+    for k, v in category_msg_template.items(): #convers category into value of a dict just to display for user
+        if category == k:
+            category = v
+    display_product = "Name : {}\nQuantity: {}\nType: {}\nCategory: {}\nDescription: {}".format(name, quantity, type, category, description)
+    print(display_product)
+
+    while True:
+        changes = input("\nDo You want to change any aspect of your product?\n").lower()
+        if changes in ("yes", "y"):
+            print("something")
+            break
+        elif changes in ("no", "n"):
+            print("something x2")
+            break
+        else:
+            print("Please, choose yes or no!")
+
+    final_product = (name, quantity, type, category, description)
+
+    for k, v in category_msg_template.items():  # convers category into key of a dict to use with instances
+        if category == v:
+            category = k
+
+    class Item(object):
+
+        def __init__(self, name, quantity, type, category, description):
+            self.name = name
+            self.quantity = quantity
+            self.type = type
+            self.category = category
+            self.description = description
+
+        def printing_product(self):
+            return "{} {} {} {} {}".format(self.name, self.quantity, self.type, self. category, self.description)
+
+    product = Item(name, quantity, type, category, description)
+    Item.printing_product(product)
+
 
 if __name__ == "__main__":
     first_choise()
