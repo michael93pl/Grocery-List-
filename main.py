@@ -37,7 +37,7 @@ class Product(Base):
 
 Base.metadata.create_all(engine)
 
-print("Hello dear User!\nYou can either add new items to your grocery list or check your list.\n\nWhat would you like to do? Please choose 'Add' or 'Check' only.")
+print("Hello dear User!\nYou can either add new items to your grocery list or check your list.\n\n")
 
 #category template with the category printing function
 category_msg_template = {"1": "Vegetables", "2": "Fruits", "3": "Dairy products", "4": "Meat", "5": "Chemistry",
@@ -46,7 +46,7 @@ category_msg_template = {"1": "Vegetables", "2": "Fruits", "3": "Dairy products"
 def first_choise():
     """checking if the user wants to add the new item or view the whole list"""
     while True:
-        choice = input().strip().lower()
+        choice = input("What would you like to do? Please choose 'Add' or 'Check' only.").lower()
         if choice in ("add", "a"):
             return gather()
         elif choice in ("check", "c"):
@@ -143,26 +143,24 @@ def gather():
     if add_description:
         description = get_description()
 
-    for k, v in category_msg_template.items(): #convers category into value of a dict just to display for user
+    for k, v in category_msg_template.items():  # converts category into value of a dict just to display for the user
         if category == k:
             category = v
     display_product = "Name : {}\nQuantity: {}\nType: {}\nCategory: {}\nDescription: {}".format(name, quantity, type, category, description)
     print(display_product)
 
-    while True:
+    while True: #asks if user wants to change any aspect of the product
         changes = input("\nDo You want to change any aspect of your product?\n").lower()
         if changes in ("yes", "y"):
-            print("something")
             break
-        elif changes in ("no", "n"):
-            print("something x2")
-            break
+        if changes in ("no", "n"):
+            return function_after_no_in_aspect_changing()
         else:
             print("Please, choose yes or no!")
 
     final_product = (name, quantity, type, category, description)
 
-    for k, v in category_msg_template.items():  # convers category into key of a dict to use with instances
+    for k, v in category_msg_template.items():  # converts category into key of a dict to use with instances
         if category == v:
             category = k
 
@@ -178,8 +176,51 @@ def gather():
         def printing_product(self):
             return "{} {} {} {} {}".format(self.name, self.quantity, self.type, self. category, self.description)
 
+        def change_name(self,):
+            self.name = new_name
+            return new_name
+
+        def change_quantity(self):
+            pass
+
+        def change_type(self):
+            pass
+
+        def change_category(self):
+            pass
+
+        def change_description(self):
+            pass
+
     product = Item(name, quantity, type, category, description)
-    Item.printing_product(product)
+    print(display_product)
+
+    while True:
+        choise = input("Which attribute do you want to change?\n").lower()
+        if choise in ("name", "1", "n"):
+            print("run first method")
+            new_name = input("Provide new name of your product")
+            product.change_name()
+            print(product.change_name())
+            break
+        if choise in ("quantity", "2", "q"):
+            print("run 2nd method")
+            break
+        if choise in ("type", "3", "t"):
+            print("run 3rd method")
+            break
+        if choise in ("category", "4", "c"):
+            print("run 4t method")
+            break
+        if choise in ("description", "5", "d"):
+            print("run 5th method")
+            break
+        else:
+            print("You messed up, pick the correct attribute you want to change")
+
+
+def function_after_no_in_aspect_changing():  # function displaying possibilities after product confirmation
+    pass
 
 
 if __name__ == "__main__":
