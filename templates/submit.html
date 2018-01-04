@@ -1,15 +1,35 @@
-<!DOCTYPE html>
+{% from "_formhelpers.html" import render_field %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1>Inkrementuj</h1>
-<p>{msg}</p>
+<h1>Add new grocery product</h1>
+<p>Provide appropriate product details</p>
 <form method="POST" action="/">
    {{ form.csrf_token }}
-   {{ form.name.label }} {{ form.name(size=20) }}
+   {{ render_field(form.name.label) }} {{ form.name(size=20) }}<br>
+   {{ render_field(form.product_quantity.label) }} {{ form.product_quantity(size=20) }}<br>
+   {{ render_field(form.product_type.label) }}
+    <select name=Item_1">
+        <option value="piece">Pieces</option>
+        <option value="kgs">Kgs</option>
+    </select><br>
+   {{ render_field(form.category.label) }}
+    <select name="Item_2">
+        <option value="1">Vegetables</option>
+        <option value="2">Fruits</option>
+        <option value="3">Dairy products</option>
+        <option value="4">Meat</option>
+        <option value="5">Chemistry</option>
+        <option value="6">Cosmetics</option>
+        <option value="7">Bread</option>
+        <option value="8">Drinks</option>
+        <option value="9">Alcohol</option>
+        <option value="10">Snacks</option>
+        <option value="11">Others</option>
+    </select><br>
    <input type="submit" value="Go">
 </form>
 </body>

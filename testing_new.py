@@ -1,31 +1,31 @@
-from flask import Flask, request
+from flask import Flask
 from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired
+from wtforms import StringField, DecimalField, validators
 from flask import render_template
-from flask import redirect
 
 
 app = Flask(__name__)
 
-
-class MyForm(FlaskForm):
-    name = StringField('name', validators=[DataRequired()])
-
-
 app.config.update(dict(
-    SECRET_KEY="super awesome key",
-    WTF_CSRF_SECRET_KEY="crsf secret key"
+    SECRET_KEY="super awesome key"
 ))
 
 
-@app.route('/submit', methods=['GET', 'POST'])
-def submit():
+class MyForm(FlaskForm):
+    name = StringField('Product name', [validators.InputRequired(), validators.Length(min=0, max=30)])
+    product_quantity = DecimalField('Quantity', [validators.InputRequired()])
+    category = StringField('Category', [validators.InputRequired()])
+    product_type = StringField('Product Type', [validators.InputRequired()])
+
+
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
     form = MyForm()
     if form.validate_on_submit():
-        return redirect('/success')
+        return "Mission accomplished!"
     return render_template('submit.html', form=form)
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
