@@ -11,12 +11,13 @@
    {{ form.csrf_token }}
    {{ render_field(form.name.label) }} {{ form.name(size=20) }}<br>
    {{ render_field(form.product_quantity.label) }} {{ form.product_quantity(size=20) }}<br>
-   {{ render_field(form.product_type.label) }}
+    {{ render_field(form.product_type.label) }}
     <select name=Item_1">
         <option value="piece">Pieces</option>
         <option value="kgs">Kgs</option>
     </select><br>
-   {{ render_field(form.category.label) }}
+
+    {{ render_field(form.category.label) }}
     <select name="Item_2">
         <option value="1">Vegetables</option>
         <option value="2">Fruits</option>
