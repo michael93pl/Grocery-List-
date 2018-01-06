@@ -1,10 +1,9 @@
+<form name="Item_1" action="{{ url_for('success') }}" method="GET">
 {% block content %}
 <h2>Results</h2>
-    {% for p in dupa %}
-    <strong>Item:</strong> {{ form.name.data }}
-    <strong>Name:</strong> {{ product_quantity}}
-    <strong>Name:</strong> {{ product_type}}
-    <strong>Name:</strong> {{ category}}
-    <strong>Name:</strong> {{ description}}
-{% endfor %}
+    <strong>Name:</strong> {{ request.form.name }}<br>
+    <strong>Quantity:</strong> {{ request.form.quantity }}<br>
+    <strong>Type:</strong> {{ request.form.product_type }}<br>
+    <strong>Category:</strong> {{ request.form.category_id }}<br>
+    <strong>Description:</strong> {{ request.form.description }}
 {% endblock %}
