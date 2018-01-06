@@ -15,7 +15,7 @@ Base = declarative_base()
 session = sessionmaker(bind=engine)
 
 class MyEnum(enum.Enum):
-    szt = "szt"
+    piece = "piece"
     kg = "kg"
 
 class Category(Base):
