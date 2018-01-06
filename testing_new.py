@@ -33,6 +33,15 @@ class Product(db.Model):
     category = db.relationship("Category",
                             backref=('products'))
 
+
+    def __init__(self,name, quantity, product_type, category_id, description):
+        self.name = name
+        self.quantity = quantity
+        self.product_type = product_type
+        self.category_id = category_id
+        self.description = description
+
+
 db.create_all()
 db.session.commit()
 
@@ -43,22 +52,35 @@ app.config.update(dict(
 
 class MyForm(FlaskForm):
     name = StringField('Product name', validators=[InputRequired(), Length(min=1, max=30)])
-    product_quantity = DecimalField('Quantity', validators=[InputRequired()])
+    quantity = DecimalField('Quantity', validators=[InputRequired()])
     product_type = StringField('Product Type')
-    category = StringField('Category')
+    category_id = DecimalField('Category')
     description = StringField("Description", validators=[Length(min=0, max=255)])
+
+def details(form):
+    return render_template('result_submit.html', form=form)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = MyForm()
     if form.validate_on_submit():
-        return redirect(url_for('success'))
+        if request.method == 'POST':
+            new_product = Product(request.form['name'], request.form['quantity'], request.form['product_type'],
+                                  request.form['category_id'], request.form['description'])
+            db.session.add(new_product)
+            db.session.commit()
+            return render_template('result_submit.html', form=form)
     return render_template('submit.html', form=form)
 
 
-@app.route('/success')
+@app.route('/success', methods=['GET', 'POST'])
 def success():
-    return render_template('result_submit.html')
+    form = MyForm()
+
+    return details(form)
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

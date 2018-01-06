@@ -10,15 +10,15 @@
 <form method="POST" action="/">
    {{ form.csrf_token }}
    {{ render_field(form.name) }}
-   {{ render_field(form.product_quantity) }}<br>
+   {{ render_field(form.quantity) }}<br>
     {{ render_field(form.product_type.label) }}
-    <select name=Item_1">
+    <select name="product_type" id="product_type">
         <option value="piece">Pieces</option>
         <option value="kgs">Kgs</option>
     </select><br>
 
-    {{ render_field(form.category.label) }}
-    <select name="Item_2">
+    {{ render_field(form.category_id.label) }}
+    <select name="category_id" id="category_id">
         <option value="1">Vegetables</option>
         <option value="2">Fruits</option>
         <option value="3">Dairy products</option>
