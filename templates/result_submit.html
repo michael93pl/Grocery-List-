@@ -1,4 +1,4 @@
-<form name="Item_1" action="{{ url_for('success') }}" method="GET">
+<form name="Item_1" action="{{ url_for('success', form=form, new_product=new_product)}}" method="GET">
 {% block content %}
 <h2>Results</h2>
     <strong>Name:</strong> {{ request.form.name }}<br>

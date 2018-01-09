@@ -7,14 +7,14 @@
 <body>
 <h1>Add new grocery product</h1>
 <p>Provide appropriate product details</p>
-<form method="POST" action="/">
+<form method="POST" action="/submit">
    {{ form.csrf_token }}
    {{ render_field(form.name) }}
    {{ render_field(form.quantity) }}<br>
     {{ render_field(form.product_type.label) }}
     <select name="product_type" id="product_type">
         <option value="piece">Pieces</option>
-        <option value="kgs">Kgs</option>
+        <option value="kg">Kgs</option>
     </select><br>
 
     {{ render_field(form.category_id.label) }}
