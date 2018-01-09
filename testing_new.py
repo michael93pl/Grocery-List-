@@ -57,11 +57,12 @@ class MyForm(FlaskForm):
     category_id = DecimalField('Category')
     description = StringField("Description", validators=[Length(min=0, max=255)])
 
-def details(form):
-    return render_template('result_submit.html', form=form)
-
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def homepage():
+    return render_template('homepage.html')
+
+@app.route('/submit', methods=['GET', 'POST'])
+def submit():
     form = MyForm()
     if form.validate_on_submit():
         if request.method == 'POST':
@@ -69,16 +70,19 @@ def index():
                                   request.form['category_id'], request.form['description'])
             db.session.add(new_product)
             db.session.commit()
-            return render_template('result_submit.html', form=form)
+            return render_template('/result_submit.html', form=form, new_product=new_product)
     return render_template('submit.html', form=form)
 
-
+#figure it out!!!!
 @app.route('/success', methods=['GET', 'POST'])
 def success():
     form = MyForm()
+    return redirect('/success')
 
-    return details(form)
-
+@app.route('/grocery-list', methods=['GET'])
+def display_data():
+    data = db.session.query(Product, Category).join(Category).all()
+    return render_template('query_database.html', data=data)
 
 
 

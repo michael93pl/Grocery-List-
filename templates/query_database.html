@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of items</title>
+</head>
+<body>
+    {% for user, category in data  %}
+        <li>{{user.id}}. {{user.name}}  {{user.quantity}}  {{user.product_type}} Category {{user.category_id}}  {{user.description}}</li>
+    {% endfor %}
+</body>
+</html>

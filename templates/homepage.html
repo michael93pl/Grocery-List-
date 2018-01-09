@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Please choose whether you want to add new item or display current grocery list</title>
+</head>
+<body>
+
+<button type="button" onclick="window.location.href='{{ url_for( 'submit', form = MyForm)}}';">Add new item</button>
+<button type="button" onclick="window.location.href='{{ url_for( 'display_data', data=data, category_name = category_name)}}';">Display the list</button>
+
+
+</body>
+</html>
