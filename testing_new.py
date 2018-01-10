@@ -12,10 +12,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:' + somestuff.mysql_pass +
 db = SQLAlchemy(app)
 
 
-class MyEnum(enum.Enum):
-    piece = "piece"
-    kg = "kg"
-
 class Category(db.Model):
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True)
@@ -26,7 +22,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
-    product_type = db.Column(db.Enum(MyEnum), nullable=False)
+    product_type = db.Column(db.String(30), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     description = db.Column(db.String(255))
 

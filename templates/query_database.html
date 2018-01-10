@@ -5,8 +5,9 @@
     <title>List of items</title>
 </head>
 <body>
-    {% for user, category in data  %}
-        <li>{{user.id}}. {{user.name}}  {{user.quantity}}  {{user.product_type}} Category {{user.category_id}}  {{user.description}}</li>
+<h1>That is your full list!</h1><br>
+    {% for p, category in data  %}
+<li><b>{{p.id}}.</b>  Name: {{p.name}} Quantity: {{p.quantity}} Type: {{p.product_type}} Category: {{p.category.name}} Description: {{p.description}}</li>
     {% endfor %}
 </body>
 </html>
