@@ -1,9 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>You just added a product!</h1>
+<p>Check details of your product</p>
+
 <form name="Item_1" action="{{ url_for('success', form=form, new_product=new_product)}}" method="GET">
 {% block content %}
-<h2>Results</h2>
     <strong>Name:</strong> {{ request.form.name }}<br>
     <strong>Quantity:</strong> {{ request.form.quantity }}<br>
     <strong>Type:</strong> {{ request.form.product_type }}<br>
     <strong>Category:</strong> {{ request.form.category_id }}<br>
     <strong>Description:</strong> {{ request.form.description }}
 {% endblock %}
+<br>
+    <button type="button" onclick="window.location.href='{{ url_for( 'display_data', data=data)}}';">Display the list</button>
+    <button type="button" onclick="window.location.href='{{ url_for( 'submit', form = MyForm)}}';">Add new item</button>
+    <button type="button" onclick="window.location.href='{{ url_for( 'homepage', form = MyForm)}}';">Homepage</button>
+
+
+</form>
+</body>

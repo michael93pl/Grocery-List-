@@ -4,7 +4,6 @@ from wtforms import StringField, DecimalField, validators, SubmitField
 from flask import render_template, redirect, url_for, request
 from wtforms.validators import InputRequired, Length
 from flask_sqlalchemy import SQLAlchemy
-import enum
 import somestuff
 
 app = Flask(__name__)
@@ -28,7 +27,6 @@ class Product(db.Model):
 
     category = db.relationship("Category",
                             backref=('products'))
-
 
     def __init__(self,name, quantity, product_type, category_id, description):
         self.name = name
