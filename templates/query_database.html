@@ -9,5 +9,8 @@
     {% for p, category in data  %}
 <li><b>{{p.id}}.</b>  Name: {{p.name}} Quantity: {{p.quantity}} Type: {{p.product_type}} Category: {{p.category.name}} Description: {{p.description}}</li>
     {% endfor %}
+<br><button type="button" onclick="window.location.href='{{ url_for( 'submit', form = MyForm)}}';">Add new item</button>
+<button type="button" onclick="window.location.href='{{ url_for( 'homepage', form = MyForm)}}';">Homepage</button>
+
 </body>
 </html>
