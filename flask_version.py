@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, validators, SubmitField
 from flask import render_template, redirect, url_for, request
 from wtforms.validators import InputRequired, Length
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, event
 import somestuff
 
 app = Flask(__name__)
@@ -70,13 +70,28 @@ def submit():
 #figure it out!!!!
 @app.route('/success', methods=['GET', 'POST'])
 def success():
-    form = MyForm()
     return redirect('/success')
 
 @app.route('/grocery-list', methods=['GET'])
 def display_data():
     data = db.session.query(Product, Category).join(Category).all()
     return render_template('query_database.html', data=data)
+
+@app.route('/delete-data', methods=['GET', 'POST'])
+def delete():
+    deletion = Product.query.delete()
+    db.session.commit()
+    return render_template('delete_page.html', deletion=deletion)
+
+@app.route('/created-new-list', methods=['GET', 'POST'])
+def afterwards():
+    reset =db.engine.execute("ALTER TABLE grocerylist.product AUTO_INCREMENT = 1;")
+    return render_template('afterwards.html', reset=reset)
+
+
+
+
+
 
 
 
