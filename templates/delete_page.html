@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new list</title>
+</head>
+<body>
+<h1>Are you sure you want to create a new list?</h1><br>
+It will delete previous list and this process is irreversible !<br>
+<button type="button" onclick="window.location.href='{{ url_for( 'afterwards', deletion = deletion, reset = reset)}}';">Yes, I am sure</button>
+<button type="button" onclick="window.location.href='{{ url_for( 'homepage', form = MyForm)}}';">No</button>
+
+</body>
+</html>
