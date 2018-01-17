@@ -1,0 +1,20 @@
+{% from "_formhelpers.html" import render_field %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Select which item you want to delete</h1>
+<form method="POST" action="/delete-item">
+        {% for p in data  %}
+<li><b>{{p.name}}</b></li>
+    {% endfor %}
+    {{ erase.csrf_token }}
+   {{ render_field(erase.name) }}
+
+   <input type="submit" value="Go"><br>
+    <button type="button" onclick="window.location.href='{{ url_for( 'homepage')}}';">Homepage</button>
+</form>
+</body>
+</html>
