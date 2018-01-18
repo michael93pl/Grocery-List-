@@ -89,9 +89,9 @@ def afterwards():
     return render_template('afterwards.html', reset=reset)
 
 def find_name(erase, field):
-    """custom validator"""
-    data = db.session.query(Product).all()
-    if field.data not in data:
+    item = field.data
+    data = db.session.query(db.exists().where(Product.name == item)).scalar()
+    if data is False:
         raise ValidationError("There isn't any item with this name")
 
 class RemoveForm(FlaskForm):
