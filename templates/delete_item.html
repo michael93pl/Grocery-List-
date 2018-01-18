@@ -8,7 +8,7 @@
 <h1>Select which item you want to delete</h1>
 <form method="POST" action="/delete-item">
         {% for p in data  %}
-<li><b>{{p.name}}</b></li>
+<li>{{p.name}}</li>
     {% endfor %}
     {{ erase.csrf_token }}
    {{ render_field(erase.name) }}
