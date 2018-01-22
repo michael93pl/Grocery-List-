@@ -1,3 +1,4 @@
+{% from "_formhelpers.html" import render_field %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,23 @@
 </head>
 <body>
 <h1>Here you can update any of your items !</h1>
-
+    {% for p, category in data  %}
+<li><b>{{p.id}}.</b>  Name: {{p.name}} Quantity: {{p.quantity}} Type: {{p.product_type}} Category: {{p.category.name}} Description: {{p.description}}</li>
+    {% endfor %}
+<h2>Pick a name and which aspect of the product you want to update</h2>
+<form method="POST" action="/update-item">
+   {{ update.csrf_token }}
+   {{ render_field(update.name) }}
+    {{ render_field(update.aspect.label) }}
+    <select name="aspect" id="aspect">
+        <option value="name">Name</option>
+        <option value="quantity">Quantity</option>
+        <option value="product_type">Type</option>
+        <option value="category">Category</option>
+        <option value="description">Description</option>
+    </select><br>
+   <input type="submit" value="Go"><br>
+<br><br><button type="button" onclick="window.location.href='{{ url_for( 'homepage', form = MyForm)}}';">Homepage</button>
+</form>
 </body>
 </html>

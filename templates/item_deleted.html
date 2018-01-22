@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>hhgfhfg</title>
+    <title>Deletion page</title>
 </head>
 <body>
-ITEM DELETED !!!!
+<h1>You have successfully deleted an item !</h1>
+    {% for p, category in data  %}
+<li><b>{{p.id}}.</b>  Name: {{p.name}} Quantity: {{p.quantity}} Type: {{p.product_type}} Category: {{p.category.name}} Description: {{p.description}}</li>
+    {% endfor %}
+
+<button type="button" onclick="window.location.href='{{ url_for( 'homepage', form = MyForm)}}';">Homepage</button>
+<button type="button" onclick="window.location.href='{{ url_for( 'submit', form = MyForm)}}';">Add new item</button>
+<button type="button" onclick="window.location.href='{{ url_for( 'removal', erase = RemoveForm)}}';">Delete item</button>
+<button type="button" onclick="window.location.href='{{ url_for( 'update', update = UpdateForm)}}';">Update item</button>
 </body>
 </html>

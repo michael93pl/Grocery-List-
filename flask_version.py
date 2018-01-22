@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:' + somestuff.mysql_pass + '@localhost/grocerylist'
 db = SQLAlchemy(app)
 
-
 class Category(db.Model):
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True)
@@ -35,10 +34,8 @@ class Product(db.Model):
         self.category_id = category_id
         self.description = description
 
-
 db.create_all()
 db.session.commit()
-
 
 app.config.update(dict(
     SECRET_KEY="super awesome key"
@@ -67,7 +64,6 @@ def submit():
             return render_template('/result_submit.html', form=form, new_product=new_product)
     return render_template('submit.html', form=form)
 
-#figure it out!!!!
 @app.route('/success', methods=['GET', 'POST'])
 def success():
     return redirect('/success')
@@ -77,6 +73,7 @@ def display_data():
     data = db.session.query(Product, Category).join(Category).all()
     return render_template('query_database.html', data=data)
 
+# New list creation module
 @app.route('/delete-data', methods=['GET', 'POST'])
 def delete():
     deletion = Product.query.delete()
@@ -88,25 +85,52 @@ def afterwards():
     reset =db.engine.execute("ALTER TABLE grocerylist.product AUTO_INCREMENT = 1;")
     return render_template('afterwards.html', reset=reset)
 
+# deleting single item module
 def find_name(erase, field):
     item = field.data
     data = db.session.query(db.exists().where(Product.name == item)).scalar()
     if data is False:
         raise ValidationError("There isn't any item with this name")
+    else:
+        something = db.session.query(Product).filter(Product.name == item).first()
+        db.session.delete(something)
+        db.session.commit()
 
 class RemoveForm(FlaskForm):
     name = StringField('Product name', validators=[InputRequired(), find_name])
 
-@app.route('/delete-item', methods=['GET','POST'])
+@app.route('/delete-item', methods=['GET', 'POST'])
 def removal():
     erase = RemoveForm()
     data = db.session.query(Product).all()
-    if erase.validate_on_submit():
-        if request.method == 'POST':
-            return render_template('item_deleted.html')
+    if request.method == 'POST':
+        if erase.validate_on_submit():
+            data = db.session.query(Product, Category).join(Category).all()
+            return render_template('item_deleted.html', data=data)
     return render_template('delete_item.html', erase=erase, data=data)
 
 
+# update item module
+def search_for_name(update, field):
+    item = field.data
+    data = db.session.query(db.exists().where(Product.name == item)).scalar()
+    if data is False:
+        raise ValidationError("There isn't any item with this name")
+
+class UpdateForm(FlaskForm):
+    name = StringField('Product name', validators=[InputRequired(), search_for_name])
+    aspect = StringField('Aspect')
+
+@app.route('/update-item', methods=['GET', 'POST'])
+def update():
+    data = db.session.query(Product, Category).join(Category).all()
+    update = UpdateForm()
+    if request.method == 'POST':
+        if update.validate_on_submit():
+            if request.form['aspect'] == 'name':
+                return render_template('test.html')
+            return render_template('updated_item.html')
+    return render_template('update_item.html', update=update, data=data)
 
 if __name__ == "__main__":
     app.run(debug=True)
