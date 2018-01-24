@@ -10,19 +10,35 @@
     {% for p, category in data  %}
 <li><b>{{p.id}}.</b>  Name: {{p.name}} Quantity: {{p.quantity}} Type: {{p.product_type}} Category: {{p.category.name}} Description: {{p.description}}</li>
     {% endfor %}
-<h2>Pick a name and which aspect of the product you want to update</h2>
+<h2>Pick an item you want to change</h2>
 <form method="POST" action="/update-item">
    {{ update.csrf_token }}
-   {{ render_field(update.name) }}
-    {{ render_field(update.aspect.label) }}
-    <select name="aspect" id="aspect">
-        <option value="name">Name</option>
-        <option value="quantity">Quantity</option>
-        <option value="product_type">Type</option>
-        <option value="category">Category</option>
-        <option value="description">Description</option>
+   {{ render_field(update.item_name) }}
+<h2>Provide new details of your product</h2>
+       {{ render_field(update.name) }}
+   {{ render_field(update.quantity) }}<br>
+    {{ render_field(update.product_type.label) }}
+    <select name="product_type" id="product_type">
+        <option value="piece">Pieces</option>
+        <option value="kg">Kgs</option>
     </select><br>
-   <input type="submit" value="Go"><br>
+
+    {{ render_field(update.category_id.label) }}
+    <select name="category_id" id="category_id">
+        <option value="1">Vegetables</option>
+        <option value="2">Fruits</option>
+        <option value="3">Dairy products</option>
+        <option value="4">Meat</option>
+        <option value="5">Chemistry</option>
+        <option value="6">Cosmetics</option>
+        <option value="7">Bread</option>
+        <option value="8">Drinks</option>
+        <option value="9">Alcohol</option>
+        <option value="10">Snacks</option>
+        <option value="11">Others</option>
+    </select><br>
+    {{ render_field(update.description) }}<br>
+   <input type="submit" value="Update"><br>
 <br><br><button type="button" onclick="window.location.href='{{ url_for( 'homepage', form = MyForm)}}';">Homepage</button>
 </form>
 </body>

@@ -109,17 +109,21 @@ def removal():
             return render_template('item_deleted.html', data=data)
     return render_template('delete_item.html', erase=erase, data=data)
 
-
 # update item module
 def search_for_name(update, field):
+    """Checks if input exists in db"""
     item = field.data
     data = db.session.query(db.exists().where(Product.name == item)).scalar()
     if data is False:
         raise ValidationError("There isn't any item with this name")
 
 class UpdateForm(FlaskForm):
-    name = StringField('Product name', validators=[InputRequired(), search_for_name])
-    aspect = StringField('Aspect')
+    item_name = StringField('Product from the list', validators=[InputRequired(), search_for_name])
+    name = StringField('New name', validators=[InputRequired(), Length(min=1, max=30)])
+    quantity = DecimalField('Quantity', validators=[InputRequired()])
+    product_type = StringField('Product Type')
+    category_id = DecimalField('Category')
+    description = StringField("Description", validators=[Length(min=0, max=255)])
 
 @app.route('/update-item', methods=['GET', 'POST'])
 def update():
@@ -127,8 +131,12 @@ def update():
     update = UpdateForm()
     if request.method == 'POST':
         if update.validate_on_submit():
-            if request.form['aspect'] == 'name':
-                return render_template('test.html')
+            something = db.session.query(Product).filter(Product.name == request.form['item_name']).update({'name' : request.form['name'],
+                                                               'quantity' : request.form['quantity'],
+                                                               'product_type' : request.form['product_type'],
+                                                               'category_id' : request.form['category_id'],
+                                                               'description' : request.form['description']})
+            db.session.commit()
             return render_template('updated_item.html')
     return render_template('update_item.html', update=update, data=data)
 
